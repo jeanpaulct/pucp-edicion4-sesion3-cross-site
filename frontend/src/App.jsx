@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DOMPurify from 'dompurify';
 
 const App = () => {
     const [reviews, setReviews] = useState([]);
@@ -112,7 +113,10 @@ const App = () => {
                             {/* Renderizado dinámico de HTML según especificación del negocio */}
                             <div 
                                 style={{ color: '#333', lineHeight: '1.5' }}
-                                dangerouslySetInnerHTML={{ __html: review.text }} 
+                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(review.text, {
+                                    ALLOWED_TAGS: ['b', 'i', 'strong', 'em'],
+                                    ALLOWED_ATTR: []
+                                }) }} 
                             />
                         </div>
                     ))
